@@ -31,5 +31,5 @@ for _ in range(n):
 
 if first == False and cur_i == 0 and cur_j == 0:
     print(result)
-elif result == n:
+else:
     print(-1)
