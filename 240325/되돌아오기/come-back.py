@@ -16,13 +16,12 @@ result = 0
 for _ in range(n):
     if first == False and cur_i == 0 and cur_j == 0:
         break
-        
+
     dr, cnt = map(str, input().split())
     cnt = int(cnt)
 
     for _ in range(cnt):
         if first == False and cur_i == 0 and cur_j == 0:
-            print(result)
             break
         else:
             cur_i = cur_i + di[mapping[dr]]
@@ -30,5 +29,7 @@ for _ in range(n):
             result += 1
             first = False
 
-if result == n:
+if first == False and cur_i == 0 and cur_j == 0:
+    print(result)
+elif result == n:
     print(-1)
