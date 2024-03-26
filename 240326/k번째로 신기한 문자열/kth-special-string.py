@@ -5,9 +5,12 @@ data = []
 for _ in range(n):
     check = True
     word = input()
-    for j in range(len(t)):
-        if t[j] != word[j]:
-            check = False
+    if len(t) > len(word):
+        check = False
+    else:
+        for j in range(len(t)):
+            if t[j] != word[j]:
+                check = False
     if check == True:
         data.append(word)
 
