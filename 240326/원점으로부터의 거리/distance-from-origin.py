@@ -6,7 +6,7 @@ for i in range(n):
     data = (data[0], data[1], i+1)
     datas.append(data)
 
-datas.sort(key=lambda x:x[0]**2 + x[1]**2)
+datas.sort(key=lambda x:((x[0]**2)**(1/2) + (x[1]**2)**(1/2), x[2]))
 
 for _, _, num in datas:
     print(num)
