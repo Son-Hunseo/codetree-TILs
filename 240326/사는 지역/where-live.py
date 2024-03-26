@@ -7,9 +7,9 @@ class person_data:
         self.location:str = location
     
     def tell(self):
-        print("name", name)
-        print("addr", loca_num)
-        print("city", location)
+        print("name", self.name)
+        print("addr", self.loca_num)
+        print("city", self.location)
 
 person_datas = []
 
