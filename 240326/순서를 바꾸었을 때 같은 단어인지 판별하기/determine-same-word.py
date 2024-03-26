@@ -10,6 +10,7 @@ else:
     for i in range(len(data1)):
         if data1[i] != data2[i]:
             print("No")
+            break
         else:
             if i == len(data1)-1:
                 print("Yes")
