@@ -17,7 +17,7 @@ def check1(i, j):
         nj1 = j + dj[dr1]
         ni2 = i + di[dr2]
         nj2 = j + dj[dr2]
-        if ni1 < 0 or ni1 > n-1 or nj1 < 0 or nj1 > n-1 or ni2 < 0 or ni2 > n-1 or nj2 < 0 or nj2 > n-1:
+        if ni1 < 0 or ni1 > n-1 or nj1 < 0 or nj1 > m-1 or ni2 < 0 or ni2 > n-1 or nj2 < 0 or nj2 > m-1:
             continue
         else:
             max_num = max(max_num, graph[i][j] + graph[ni1][nj1] + graph[ni2][nj2])
@@ -30,7 +30,7 @@ def check2(i, j):
         nj1 = j + dj[dr]
         ni2 = i + (di[dr]*2)
         nj2 = j + (dj[dr]*2)
-        if ni1 < 0 or ni1 > n-1 or nj1 < 0 or nj1 > n-1 or ni2 < 0 or ni2 > n-1 or nj2 < 0 or nj2 > n-1:
+        if ni1 < 0 or ni1 > n-1 or nj1 < 0 or nj1 > m-1 or ni2 < 0 or ni2 > n-1 or nj2 < 0 or nj2 > m-1:
             continue
         else:
             max_num = max(max_num, graph[i][j] + graph[ni1][nj1] + graph[ni2][nj2])
