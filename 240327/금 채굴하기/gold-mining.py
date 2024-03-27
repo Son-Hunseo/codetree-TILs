@@ -7,11 +7,10 @@ for _ in range(n):
 di = [-1, 0, 1, 0]
 dj = [0, -1, 0, 1]
 
-def check(i, j, cnt, k):
+def check(i, j, k):
     global candi_list
-    if cnt == k:
+    if ((oi - i)**2)**(1/2) + ((oj - j)**2)**(1/2) >= k:
         return
-    cnt += 1
     for dr in range(4):
         ni = i + di[dr]
         nj = j + dj[dr]
@@ -20,7 +19,7 @@ def check(i, j, cnt, k):
         else:
             if (ni, nj) not in candi_list:
                 candi_list.append((ni, nj))
-                check(ni, nj, cnt, k)
+                check(ni, nj, k)
 
 def mining(candi_list, m, k):
     gold_num = 0
@@ -36,8 +35,9 @@ result = 0
 for i in range(n):
     for j in range(n):
         for k in range(2*n-1):
+            oi, oj = i, j
             candi_list = [(i, j)]
-            check(i, j, 0, k)
+            check(i, j, k)
             result = max(result, mining(candi_list, m, k))
 
 print(result)
