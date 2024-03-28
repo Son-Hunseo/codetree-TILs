@@ -14,7 +14,7 @@ for _ in range(t):
     moving()
 
 for i in range(3*n):
-    if (i+1)%3 == 0:
+    if (i+1)%n == 0:
         print(data[i])
     else:
         print(data[i], end=" ")
