@@ -7,30 +7,34 @@ for _ in range(n):
 di = [-1, -1, 1, 1]
 dj = [1, -1, -1, 1]
 
-def check(i, j):
-    oi, oj, = i, j
-    cnt = [0, 0, 0, 0]
-    result = graph[i][j]
+def check(i, j, a, b):
+    cnt = 0
     for dr in range(4):
-        while True:
-            ni = i + di[dr]
-            nj = j + dj[dr]
-            if ni == oi and nj == oj:
-                break
-            if ni < 0 or ni > n-1 or nj < 0 or nj > n-1:
-                break
-            else:
-                cnt[dr] += 1
-                result += graph[ni][nj]
+        if dr == 0 or dr == 2:
+            for _ in range(1, a+1):
+                ni = i + di[dr]
+                nj = j + dj[dr]
+                if ni < 0 or ni > n-1 or nj < 0 or nj > n-1:
+                    # 주어진 길이의 사각형이 범위를 벗어나면 그냥 무조건 0 리턴
+                    return 0
+                cnt += graph[ni][nj]
                 i, j = ni, nj
-    if min(cnt) < 1:
-        return 0
-    else:
-        return result
+        else:
+            for _ in range(1, b+1):
+                ni = i + di[dr]
+                nj = j + dj[dr]
+                if ni < 0 or ni > n-1 or nj < 0 or nj > n-1:
+                    # 주어진 길이의 사각형이 범위를 벗어나면 그냥 무조건 0 리턴
+                    return 0
+                cnt += graph[ni][nj]
+                i, j = ni, nj
+    return cnt
 
-max_result = 0
+result = 0
 for i in range(n):
     for j in range(n):
-        max_result = max(max_result, check(i, j))
+        for x in range(1, n):
+            for y in range(1, n):
+                result = max(result, check(i, j, x, y))
 
-print(max_result)
+print(result)
