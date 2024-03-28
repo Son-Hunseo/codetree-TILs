@@ -8,12 +8,15 @@ di = [-1, -1, 1, 1]
 dj = [1, -1, -1, 1]
 
 def check(i, j):
+    oi, oj, = i, j
     cnt = [0, 0, 0, 0]
-    result = 0
+    result = graph[i][j]
     for dr in range(4):
         while True:
             ni = i + di[dr]
             nj = j + dj[dr]
+            if ni == oi and nj == oj:
+                break
             if ni < 0 or ni > n-1 or nj < 0 or nj > n-1:
                 break
             else:
