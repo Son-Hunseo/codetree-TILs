@@ -11,7 +11,10 @@ def mining(row, col, m, k):
         for j in range(n):
             if abs(row - i) + abs(col - j) <= k:
                 cnt += graph[i][j]
-    return cnt
+    if m*cnt >= k**2 + (k+1)**2:
+        return cnt
+    else:
+        return 0
 
 result = 0
 for i in range(n):
