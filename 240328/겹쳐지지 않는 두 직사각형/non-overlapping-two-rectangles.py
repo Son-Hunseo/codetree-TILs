@@ -9,18 +9,18 @@ def count_sum(i, j, h, w):
     for x in range(i, i+h):
         for y in range(j, j+w):
             if x < 0 or x > n-1 or y < 0 or y > m-1:
-                return 0
+                return False
             cnt += graph[x][y]
     return cnt
 
 candi = []
 for i in range(n):
-    for j in range(n):
+    for j in range(m):
         for h in range(1, n+1):
-            for w in range(1, n+1):
-                if h == n and w == n:
+            for w in range(1, m+1):
+                if h == n and w == m:
                     continue
-                if count_sum(i, j, h, w) != 0:
+                if count_sum(i, j, h, w) != False:
                     candi.append((i, j, h, w))
 
 def check(data1, data2):
