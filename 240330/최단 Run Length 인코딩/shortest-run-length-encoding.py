@@ -18,7 +18,7 @@ def encoding(data):
     return ndata
 
 result = []
-for _ in range(1, len(data)):
+for _ in range(len(data)):
     data = [data[-1]] + data[:len(data)-1]
     result.append(len(encoding(data)))
 
