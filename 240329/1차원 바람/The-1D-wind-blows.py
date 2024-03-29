@@ -16,8 +16,6 @@ def left_wind(row_idx):
         graph[row_idx][i] = graph[row_idx][i-1]
     graph[row_idx][0] = temp
 
-check = [0 for _ in range(n)]
-
 def wind_blow(row_idx, dr):
     check[row_idx] = 1
     
@@ -46,6 +44,7 @@ def wind_blow(row_idx, dr):
 for _ in range(q):
     row_idx, dr = map(str, input().split())
     row_idx = int(row_idx)-1
+    check = [0 for _ in range(n)]
     wind_blow(row_idx, dr)
 
 for row in graph:
