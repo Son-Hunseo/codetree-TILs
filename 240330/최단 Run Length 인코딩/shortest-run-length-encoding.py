@@ -22,4 +22,7 @@ for i in range(1, len(data)):
     data = [data[-1]] + data[:len(data)-1]
     result.append(len(encoding(data)))
 
-print(min(result))
+if result:
+    print(min(result))
+else:
+    print(2)
