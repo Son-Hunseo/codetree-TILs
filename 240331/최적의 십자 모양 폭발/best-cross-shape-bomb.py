@@ -10,6 +10,7 @@ dj = [0, -1, 0, 1]
 def bomb(bomb_i, bomb_j, graph):
     # 폭탄 터짐
     value = graph[bomb_i][bomb_j]
+    graph[bomb_i][bomb_j] = 0
     for cnt in range(1, value):
         for dr in range(4):
             ni = bomb_i + di[dr]*cnt
