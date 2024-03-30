@@ -11,16 +11,12 @@ def bomb(i, j):
     cnt = graph[i][j]-1
     graph[i][j] = 0
     for dr in range(4):
-        ni = i + di[dr]
-        nj = j + dj[dr]
-        if ni < 0 or ni > n-1 or nj < 0 or nj > n-1:
-            continue
-        graph[ni][nj] = 0
-        nni = i + di[dr]*2
-        nnj = j + di[dr]*2
-        if nni < 0 or nni > n-1 or nnj < 0 or nnj > n-1:
-            continue
-        graph[nni][nnj] = 0
+        for w in range(1, cnt):
+            ni = i + di[dr]*w
+            nj = j + dj[dr]*w
+            if ni < 0 or ni > n-1 or nj < 0 or nj > n-1:
+                continue
+            graph[ni][nj] = 0
 
 def fall_down():
     for j in range(n):
