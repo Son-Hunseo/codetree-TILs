@@ -47,20 +47,20 @@ def move(idx):
         graph[idx][i] = temp2[i]
 
 if dr == "U":
-    graph = list(map(list, zip(graph)))
+    graph = list(map(list, zip(*graph)))
     for i in range(4):
         move(i)
-    graph = list(map(list, zip(graph)))
+    graph = list(map(list, zip(*graph)))
 elif dr == "L":
     for i in range(4):
         move(i)
 elif dr == "D":
-    graph = list(map(list, zip(graph)))
+    graph = list(map(list, zip(*graph)))
     graph = [row[::-1] for row in graph]
     for i in range(4):
         move(i)
     graph = [row[::-1] for row in graph]
-    graph = list(map(list, zip(graph)))
+    graph = list(map(list, zip(*graph)))
 else:
     graph = [row[::-1] for row in graph]
     for i in range(4):
