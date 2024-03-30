@@ -23,6 +23,10 @@ def encoding(data):
 result = []
 for _ in range(len(data)):
     data = [data[-1]] + data[:len(data)-1]
-    result.append(len(encoding(data)))
+    edata = encoding(data)
+    word = ""
+    for i in range(len(edata)):
+        word = word + str(edata[i])
+    result.append(len(word))
 
 print(min(result))
