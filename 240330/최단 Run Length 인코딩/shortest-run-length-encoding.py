@@ -23,7 +23,6 @@ def encoding(data):
 result = []
 for _ in range(len(data)):
     data = [data[-1]] + data[:len(data)-1]
-    print(*data)
     result.append(len(encoding(data)))
 
 print(min(result))
