@@ -8,7 +8,7 @@ di = [-1, 0, 1, 0]
 dj = [0, -1, 0, 1]
 
 def bomb(i, j):
-    cnt = graph[i][j]-1
+    cnt = graph[i][j]
     graph[i][j] = 0
     for dr in range(4):
         for w in range(1, cnt):
