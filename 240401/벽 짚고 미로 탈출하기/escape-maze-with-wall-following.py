@@ -34,13 +34,18 @@ def check_forward(cur_i, cur_j, cur_dr):
 
 cur_dr = 1
 time = 0
+cnt = 0
 while True:
+    if cnt > 3:
+        time = -1
+        break
     if time > n*n:
         time = -1
         break
     if check_forward(cur_i, cur_j, cur_dr):
         cur_i = cur_i + di[cur_dr]
         cur_j = cur_j + dj[cur_dr]
+        cnt = 0
         time += 1
         if cur_i < 0 or cur_i > n-1 or cur_j < 0 or cur_j > n-1:
             break
@@ -50,5 +55,6 @@ while True:
     else:
         # 방향 전환
         cur_dr = (cur_dr+3)%4
+        cnt += 1
 
 print(time)
