@@ -51,6 +51,11 @@ def snake_move():
                 time += 1
                 graph[ni][nj] = 1
                 snake.appendleft((ni, nj))
+            # 꼬리 위치와 머리 위치가 바뀌는 순간
+            elif ni == snake[-1][0] and nj == snake[-1][1]:
+                time += 1
+                snake.appendleft((ni, nj))
+                tail_i, tail_j = snake.pop()
             # 몸이 꼬임
             else:
                 time += 1
