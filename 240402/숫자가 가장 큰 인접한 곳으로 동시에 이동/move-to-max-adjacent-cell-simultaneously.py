@@ -21,14 +21,14 @@ di = [-1, 1, 0, 0]
 dj = [0, 0, -1, 1]
 
 def ball_move(r, c):
-    candi = []
+    candi = [0, 0, 0, 0]
     for dr in range(4):
         ni = r + di[dr]
         nj = c + dj[dr]
         if ni < 0 or ni > n-1 or nj < 0 or nj > n-1:
             continue
         else:
-            candi.append(graph[ni][nj])
+            candi[dr] = graph[ni][nj]
     if candi:
         dr = candi.index(max(candi))
         return r + di[dr], c + dj[dr]
