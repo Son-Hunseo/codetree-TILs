@@ -10,20 +10,20 @@ dj = [0, -1, 0, 1]
 def ball_input(idx, dr):
     # 초기 진입 위치
     if dr == 0:
-        cur_i = 0
+        cur_i = n-1
         cur_j = idx
     elif dr == 1:
         cur_i = idx
-        cur_j = 0
+        cur_j = n-1
     elif dr == 2:
-        cur_i = n-1
+        cur_i = 0
         cur_j = idx
     else:
         cur_i = idx
-        cur_j = n-1
+        cur_j = 0
     
     # 들어간 자리에 바로 바가 있을 경우
-    if graph[cur_i][cur_j] == 1:
+    if graph[cur_i][cur_j] == 2:
         if dr == 0:
             dr = 1
         elif dr == 1:
@@ -32,7 +32,7 @@ def ball_input(idx, dr):
             dr = 3
         else:
             dr = 2
-    elif graph[cur_i][cur_j] == 2:
+    elif graph[cur_i][cur_j] == 1:
         if dr == 0:
             dr = 3
         elif dr == 1:
