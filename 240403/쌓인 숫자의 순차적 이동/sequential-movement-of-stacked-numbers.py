@@ -2,11 +2,12 @@ n, m = map(int, input().split())
 
 graph = []
 for _ in range(n):
-    graph.append(list(map(list, input().split())))
+    graph.append(list(map(int, input().split())))
 
 for i in range(n):
     for j in range(n):
-        graph[i][j][0] = int(graph[i][j][0])
+        num = graph[i][j]
+        graph[i][j] = [num]
 
 move_list = list(map(int, input().split()))
 
@@ -18,6 +19,7 @@ for num in move_list:
         for j in range(n):
             if graph[i][j]:
                 if num in graph[i][j]:
+                    print(num)
                     cur_i, cur_j = i, j
 
     candi = [-99999999 for _ in range(8)]
