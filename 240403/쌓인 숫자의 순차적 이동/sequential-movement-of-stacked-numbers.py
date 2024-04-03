@@ -19,7 +19,6 @@ for num in move_list:
         for j in range(n):
             if graph[i][j]:
                 if num in graph[i][j]:
-                    print(num)
                     cur_i, cur_j = i, j
 
     candi = [-99999999 for _ in range(8)]
