@@ -23,16 +23,19 @@ for _ in range(t):
     for r, c, _ in data:
         graph[r][c] += 1
 
-    ndata = []
     for _ in range(2*n):
         for i in range(n):
             for j in range(n):
                 if graph[i][j] > 1:
                     graph[i][j] = 0
+                    nndata = []
                     for con in data:
                         if con[0] == i and con [1] == j:
-                            data.remove(con)
+                            continue
+                        nndata.append(con)
+                    data = nndata[:]
 
+        ndata = []
         for r, c, dr in data:
             ni = r + di[dr]
             nj = c + dj[dr]
@@ -46,7 +49,6 @@ for _ in range(t):
             graph[r][c] -= 1
             ndata.append((ni, nj, dr))
         data = ndata[:]
-        ndata = []
 
     result = 0
     for row in graph:
