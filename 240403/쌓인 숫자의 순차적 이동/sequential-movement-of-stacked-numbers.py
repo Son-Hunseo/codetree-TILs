@@ -20,7 +20,7 @@ for num in move_list:
                 if num in graph[i][j]:
                     cur_i, cur_j = i, j
 
-    candi = [0 for _ in range(8)]
+    candi = [-99999999 for _ in range(8)]
     for dr in range(8):
         ni = cur_i + di[dr]
         nj = cur_j + dj[dr]
@@ -28,20 +28,21 @@ for num in move_list:
             continue
         if graph[ni][nj]:
             candi[dr] = max(graph[ni][nj])
-    dr = candi.index(max(candi))
-    ni = cur_i + di[dr]
-    nj = cur_j + dj[dr]
+    if max(candi) == -99999999:
+        ni = cur_i
+        nj = cur_j
+    else:
+        dr = candi.index(max(candi))
+        ni = cur_i + di[dr]
+        nj = cur_j + dj[dr]
     
     # 해당 위치의 리스트에서 현재 숫자의 인덱스 찾기
     k = graph[cur_i][cur_j].index(num)
 
     # 각 위치의 마지막 원소가 맨 위에 있는 원소
-    graph[ni][nj] = graph[ni][nj] + graph[cur_i][cur_j][k:]
-    graph[cur_i][cur_j] = graph[cur_i][cur_j][:k]
-    # 테스트
-    # for row in graph:
-    #     print(*row)
-    # print('----------')
+    if max(candi) != -99999999:
+        graph[ni][nj] = graph[ni][nj] + graph[cur_i][cur_j][k:]
+        graph[cur_i][cur_j] = graph[cur_i][cur_j][:k]
 
 for i in range(n):
     for j in range(n):
