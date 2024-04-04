@@ -71,5 +71,8 @@ for _ in range(t):
             ndata = nndata[:]
     data = ndata[:]
 
+result = 0
 for row in graph:
-    print(*row)
+    result += sum(row)
+
+print(result)
