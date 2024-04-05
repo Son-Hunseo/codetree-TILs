@@ -21,16 +21,15 @@ for _ in range(t):
     
     time = 0
     result = -1
-    flag = True
 
-    while flag == True:
+    while data:
         ndata = []
         time += 1
         for con1 in data:
             x, y, w, dr, num = con1[0], con1[1], con1[2], con1[3], con1[4]
             nx, ny = x + dx[dr], y + dy[dr]
             if x > 4000 or y > 4000 or x < 0 or y < 0:
-                flag = False
+                data.remove(con1)
                 break
             if ndata:
                 check = False
