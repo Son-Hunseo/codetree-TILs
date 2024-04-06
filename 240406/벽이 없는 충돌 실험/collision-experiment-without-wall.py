@@ -39,15 +39,13 @@ for _ in range(t):
 
     time = 0
     result = -1
-    flag = True
-    while flag == True:
+    while len(data) != 0:
         time += 1
         ndata = []
         for i in range(len(data)):
             con1 = move_marble(data[i])
             if con1[0] < 0 or con1[0] > 4000 or con1[1] < 0 or con1[1] > 4000:
-                flag = False
-                break
+                continue
             if len(ndata) == 0:
                 ndata.append(con1)
             else:
