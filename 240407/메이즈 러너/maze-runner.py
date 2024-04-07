@@ -139,21 +139,17 @@ for _ in range(k):
                cnt += 1
     if cnt == 0:
         break
+
     # 참가자 이동
     move()
-    for row in people_graph:
-        print(*row)
-    print("----------")
+
     # 돌릴 위치 확인
     LU_x, LU_y, RD_x, RD_y = get_square()
     if LU_x == RD_x and LU_y == RD_y:
         continue
+
     # 미로 회전
     turn_square(LU_x, LU_y, RD_x, RD_y)
-    for row in people_graph:
-        print(*row)
-    print("----------")
-
 
 print(move_sum)
 es = get_escape()
