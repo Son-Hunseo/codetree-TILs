@@ -97,28 +97,29 @@ def turn_square(LU_x, LU_y, RD_x, RD_y):
     target_square = []
 
     # graph 돌리기
-    for i in range(LU_x, RD_x + 1):
-        target_square.append(graph[i][LU_y:RD_y + 1])
-    target_square = list(map(list, zip(*target_square)))
-    target_square = [row[::-1] for row in target_square]
-
-    # graph에 적용
-    for i in range(len(target_square)):
-        for j in range(len(target_square)):
-            graph[LU_x+i][LU_y+j] = max(target_square[i][j]-1, 0)
-
-    target_square = []
-
-    # people graph 돌리기
-    for i in range(LU_x, RD_x + 1):
-        target_square.append(people_graph[i][LU_y:RD_y + 1])
-    target_square = list(map(list, zip(*target_square)))
-    target_square = [row[::-1] for row in target_square]
-
-    # people graph에 적용
-    for i in range(len(target_square)):
-        for j in range(len(target_square)):
-            people_graph[LU_x+i][LU_y+j] = target_square[i][j]
+    if (RD_x - LU_x) != 0:
+        for i in range(LU_x, RD_x + 1):
+            target_square.append(graph[i][LU_y:RD_y + 1])
+        target_square = list(map(list, zip(*target_square)))
+        target_square = [row[::-1] for row in target_square]
+    
+        # graph에 적용
+        for i in range(len(target_square)):
+            for j in range(len(target_square)):
+                graph[LU_x+i][LU_y+j] = max(target_square[i][j]-1, 0)
+    
+        target_square = []
+    
+        # people graph 돌리기
+        for i in range(LU_x, RD_x + 1):
+            target_square.append(people_graph[i][LU_y:RD_y + 1])
+        target_square = list(map(list, zip(*target_square)))
+        target_square = [row[::-1] for row in target_square]
+    
+        # people graph에 적용
+        for i in range(len(target_square)):
+            for j in range(len(target_square)):
+                people_graph[LU_x+i][LU_y+j] = target_square[i][j]
 
 # 시뮬레이션 시작
 move_sum = 0
