@@ -29,6 +29,7 @@ dy = [0, 0, -1, 1]
 
 def move():
     global move_sum
+    global people_graph
     plist = []
     for i in range(n):
         for j in range(n):
@@ -36,8 +37,10 @@ def move():
                 plist.append((i, j))
 
     es = get_escape()
+    npeople_graph = [[0 for _ in range(n)] for _ in range(n)]
 
     for i, j in plist:
+        dis_list = [100, 100, 100, 100]
         cur_dis = cal_distance(i, j, es[0], es[1])
         for dr in range(4):
             nx = i + dx[dr]
@@ -47,15 +50,22 @@ def move():
             n_dis = cal_distance(nx, ny, es[0], es[1])
             if n_dis >= cur_dis:
                 continue
+            dis_list[dr] = n_dis
+
+        if min(dis_list) != 100:
+            dr = dis_list.index(min(dis_list))
+            nx = i + dx[dr]
+            ny = j + dy[dr]
             if people_graph[nx][ny] < -10000:
                 move_sum += people_graph[i][j]
-                people_graph[i][j] = 0
-                break
             else:
                 move_sum += people_graph[i][j]
-                people_graph[nx][ny] = people_graph[i][j]
-                people_graph[i][j] = 0
-                break
+                npeople_graph[nx][ny] += people_graph[i][j]
+
+    es = get_escape()
+    npeople_graph[es[0]][es[1]] = -99999999
+
+    people_graph = [row[:] for row in npeople_graph]
 
 def get_square():
     x, y = 0, 0
@@ -131,12 +141,19 @@ for _ in range(k):
         break
     # 참가자 이동
     move()
+    for row in people_graph:
+        print(*row)
+    print("----------")
     # 돌릴 위치 확인
     LU_x, LU_y, RD_x, RD_y = get_square()
     if LU_x == RD_x and LU_y == RD_y:
         continue
     # 미로 회전
     turn_square(LU_x, LU_y, RD_x, RD_y)
+    for row in people_graph:
+        print(*row)
+    print("----------")
+
 
 print(move_sum)
 es = get_escape()
