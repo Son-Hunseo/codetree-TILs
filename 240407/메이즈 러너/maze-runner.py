@@ -62,6 +62,7 @@ def move():
                 break
 
 def get_square():
+    x, y = 0, 0
     num = 99999999
     es = get_escape()
 
