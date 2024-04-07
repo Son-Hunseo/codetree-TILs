@@ -24,12 +24,8 @@ def get_escape():
 def cal_distance(cur_x, cur_y, es_x, es_y):
     return abs(cur_x - es_x) + abs(cur_y - es_y)
 
-
-# move 다시 짜야함
-# 상하좌우 우선이라 방향 이런 순서로 정의
 dx = [-1, 1, 0, 0]
 dy = [0, 0, -1, 1]
-
 
 def move():
     global move_sum
@@ -73,6 +69,8 @@ def get_square():
                 if side < num:
                     num = side
                     x, y = i, j
+    if num == 99999999:
+        return (0, 0, 0, 0)
     side = num
 
     # 우측 하단 구하기
@@ -97,38 +95,46 @@ def turn_square(LU_x, LU_y, RD_x, RD_y):
     target_square = []
 
     # graph 돌리기
-    if (RD_x - LU_x) != 0:
-        for i in range(LU_x, RD_x + 1):
-            target_square.append(graph[i][LU_y:RD_y + 1])
-        target_square = list(map(list, zip(*target_square)))
-        target_square = [row[::-1] for row in target_square]
-    
-        # graph에 적용
-        for i in range(len(target_square)):
-            for j in range(len(target_square)):
-                graph[LU_x+i][LU_y+j] = max(target_square[i][j]-1, 0)
-    
-        target_square = []
-    
-        # people graph 돌리기
-        for i in range(LU_x, RD_x + 1):
-            target_square.append(people_graph[i][LU_y:RD_y + 1])
-        target_square = list(map(list, zip(*target_square)))
-        target_square = [row[::-1] for row in target_square]
-    
-        # people graph에 적용
-        for i in range(len(target_square)):
-            for j in range(len(target_square)):
-                people_graph[LU_x+i][LU_y+j] = target_square[i][j]
+    for i in range(LU_x, RD_x + 1):
+        target_square.append(graph[i][LU_y:RD_y + 1])
+    target_square = list(map(list, zip(*target_square)))
+    target_square = [row[::-1] for row in target_square]
+
+    # graph에 적용
+    for i in range(len(target_square)):
+        for j in range(len(target_square)):
+            graph[LU_x+i][LU_y+j] = max(target_square[i][j]-1, 0)
+
+    target_square = []
+
+    # people graph 돌리기
+    for i in range(LU_x, RD_x + 1):
+        target_square.append(people_graph[i][LU_y:RD_y + 1])
+    target_square = list(map(list, zip(*target_square)))
+    target_square = [row[::-1] for row in target_square]
+
+    # people graph에 적용
+    for i in range(len(target_square)):
+        for j in range(len(target_square)):
+            people_graph[LU_x+i][LU_y+j] = target_square[i][j]
 
 # 시뮬레이션 시작
 move_sum = 0
 
 for _ in range(k):
+    cnt = 0
+    for i in range(n):
+        for j in range(n):
+           if people_graph[i][j] >= 1:
+               cnt += 1
+    if cnt == 0:
+        break
     # 참가자 이동
     move()
     # 돌릴 위치 확인
     LU_x, LU_y, RD_x, RD_y = get_square()
+    if LU_x == RD_x and LU_y == RD_y:
+        continue
     # 미로 회전
     turn_square(LU_x, LU_y, RD_x, RD_y)
 
