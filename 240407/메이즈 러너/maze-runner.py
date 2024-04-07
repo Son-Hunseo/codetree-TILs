@@ -61,10 +61,11 @@ def move():
             else:
                 move_sum += people_graph[i][j]
                 npeople_graph[nx][ny] += people_graph[i][j]
+        else:
+            npeople_graph[i][j] += people_graph[i][j]
 
     es = get_escape()
     npeople_graph[es[0]][es[1]] = -99999999
-
     people_graph = [row[:] for row in npeople_graph]
 
 def get_square():
