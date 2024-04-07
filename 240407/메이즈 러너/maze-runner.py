@@ -69,36 +69,33 @@ def move():
     people_graph = [row[:] for row in npeople_graph]
 
 def get_square():
-    x, y = 0, 0
-    num = 99999999
     es = get_escape()
 
+    square_list = []
     for i in range(n):
         for j in range(n):
             if people_graph[i][j] >= 1:
                 side = max((abs(i - es[0])), abs(j - es[1]))
-                if side < num:
-                    num = side
-                    x, y = i, j
-    if num == 99999999:
+                # 우측 하단 구하기
+                RD_x = max(i, es[0])
+                RD_y = max(j, es[1])
+                # 정사각형 범위 구하기
+                if RD_x - side >= 0:
+                    LU_x = RD_x - side
+                else:
+                    LU_x = 0
+                    RD_x = side
+                if RD_y - side >= 0:
+                    LU_y = RD_y - side
+                else:
+                    LU_y = 0
+                    RD_y = side
+                square_list.append((side, LU_x, LU_y, RD_x, RD_y))
+    square_list.sort(key=lambda x:(x[0], x[1], x[2]))
+    if square_list:
+        return (square_list[0][1], square_list[0][2], square_list[0][3], square_list[0][4])
+    else:
         return (0, 0, 0, 0)
-    side = num
-
-    # 우측 하단 구하기
-    RD_x = max(x, es[0])
-    RD_y = max(y, es[1])
-    # 정사각형 범위 구하기
-    if RD_x - side >= 0:
-        LU_x = RD_x - side
-    else:
-        LU_x = 0
-        RD_x = side
-    if RD_y - side >= 0:
-        LU_y = RD_y - side
-    else:
-        LU_y = 0
-        RD_y = side
-    return (LU_x, LU_y, RD_x, RD_y)
 
 
 # 돌릴 때 graph 랑 people graph 같이 돌려야함
