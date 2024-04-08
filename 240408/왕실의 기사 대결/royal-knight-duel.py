@@ -1,3 +1,5 @@
+from collections import deque
+
 l, n, q = map(int, input().split())
 
 graph = []
@@ -21,33 +23,48 @@ dx = [-1, 0, 1, 0]
 dy = [0, 1, 0, -1]
 
 def is_move(num, dr):
+    q = deque()
     for con in knight_loca_data[num]:
-        x = con[0]
-        y = con[1]
-        nx = x + dx[dr]
-        ny = y + dy[dr]
+        q.append(con)
+
+    check = [num]
+
+    while q:
+        cur = q.popleft()
+        cur_x, cur_y = cur[0], cur[1]
+        nx, ny = cur_x + dx[dr], cur_y + dy[dr]
         if nx < 0 or nx > l-1 or ny < 0 or ny > l-1 or graph[nx][ny] == 2:
             return False
         for i in range(len(knight_loca_data)):
-            if i == num:
+            if i in check:
                 continue
             if (nx, ny) in knight_loca_data[i]:
-                if is_move(i, dr) == False:
-                    return False
+                check.append(i)
+                for con in knight_loca_data[i]:
+                    q.append(con)
     return True
 
 def move(num, dr):
+    q = deque()
     for con in knight_loca_data[num]:
-        x = con[0]
-        y = con[1]
-        nx = x + dx[dr]
-        ny = y + dy[dr]
-        nknight_loca_data[num].append((nx, ny))
+        x, y = con[0], con[1]
+        q.append((num, x, y))
+
+    check = [num]
+
+    while q:
+        cur = q.popleft()
+        cur_x, cur_y = cur[1], cur[2]
+        nx, ny = cur_x + dx[dr], cur_y + dy[dr]
+        nknight_loca_data[cur[0]].append((nx, ny))
         for i in range(len(knight_loca_data)):
-            if i == num:
+            if i in check:
                 continue
             if (nx, ny) in knight_loca_data[i]:
-                move(i, dr)
+                check.append(i)
+                for con in knight_loca_data[i]:
+                    x, y = con[0], con[1]
+                    q.append((i, x, y))
 
     # 움직인 기사만 체크
     for i in range(1, n+1):
@@ -71,7 +88,7 @@ for _ in range(q):
         move(num, dr)
 
         # 움직이지 않은 것도 처리
-        for i in range(len(move_knight_list)):
+        for i in range(1, n+1):
             if move_knight_list[i] == 0:
                 nknight_loca_data[i] = knight_loca_data[i][:]
 
