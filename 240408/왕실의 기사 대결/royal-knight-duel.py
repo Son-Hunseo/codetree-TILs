@@ -91,16 +91,10 @@ for _ in range(q):
             if knight_hp[i] <= 0:
                 knight_loca_data[i] = []
 
-    # 테스트
-    # for row in knight_loca_data:
-    #     print(row)
-    # print(move_knight_list)
-    # print(knight_hp)
-    # print("-----------")
-
 result = 0
 for i in range(1, n+1):
     # 현재 생존한 기사만 카운트
+    knight_hp[i] = max(0, knight_hp[i])
     if knight_hp[i] != 0:
         result += og_knight_hp[i] - knight_hp[i]
 
