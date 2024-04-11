@@ -37,6 +37,9 @@ def Ru_move():
     ## (번호, 거리, r, c)
     santa_dis = [(0, 9999, -1, -1) for _ in range(p+1)]
     for i in range(1, len(santa_data)):
+        # 루돌프가 탈락한 산타를 타겟으로 잡지 않게 하기 위해
+        if santa_data[i][0] == -1 and santa_data[i][1] == -1:
+            continue
         santa_dis[i] = (i, cal_distance(Rr, Rc, santa_data[i][0], santa_data[i][1]), santa_data[i][0], santa_data[i][1])
     santa_dis.sort(key=lambda x: (x[1], -x[2], -x[3]))
     target_santa = santa_dis[0]
