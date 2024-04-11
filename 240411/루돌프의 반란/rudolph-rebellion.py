@@ -179,11 +179,20 @@ for cnt in range(m):
         cur_crash_santa_num = -9999
         crash(1)
         interaction(1)
-    for i in range(len(score)):
-        # 탈락인 경우
+    # 모든 산타가 탈락한다면 즉시 게임 종료
+    all_santa_die = True
+    for i in range(1, len(santa_data)):
         if santa_data[i][0] == -1 and santa_data[i][1] == -1:
             continue
-        # 생존한 경우
+        else:
+            all_santa_die = False
+    if all_santa_die:
+        break
+
+    # 게임 끝나고 생존한 산타에게 모두 1점씩
+    for i in range(1, len(score)):
+        if santa_data[i][0] == -1 and santa_data[i][1] == -1:
+            continue
         score[i] += 1
 
 print(*score[1:])
