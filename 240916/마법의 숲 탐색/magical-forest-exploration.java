@@ -1,6 +1,8 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayDeque;
+import java.util.Deque;
 import java.util.StringTokenizer;
 
 /**
@@ -65,6 +67,7 @@ public class Main {
     static final int[] dRow = {-1, 0, 1, 0};
     static final int[] dCol = {0, 1, 0, -1};
 
+    static Deque<int[]> queue;
     static int depth;
     static int result;
 
@@ -127,13 +130,15 @@ public class Main {
             map[WestLoca[0]][WestLoca[1]] = NORMAL_GOLEM;
 
             map[curGolem.centorRowLoca + dRow[curGolem.exitLoca]][curGolem.centorColLoca + dCol[curGolem.exitLoca]] = GOLEM_EXIT;
+            queue = new ArrayDeque<>();
 
             visited = new boolean[sizeOfRow][sizeOfCol];
             depth = curGolem.centorRowLoca;
 
             // 2-4-3. 정령을 이동시킨다.
             visited[golemArr[golemIdx].centorRowLoca][golemArr[golemIdx].centorColLoca] = true;
-            moveElement(golemArr[golemIdx].centorRowLoca, golemArr[golemIdx].centorColLoca);
+            queue.offer(new int[]{golemArr[golemIdx].centorRowLoca, golemArr[golemIdx].centorColLoca});
+            moveElement();
 
             // 3-3. 가장 아래까지 내려간 행의 번호를 결과에 누적시킨다. (주의! 0번째 인덱스 행은 1번째 번호의 행이다.)
             result += (depth + 1);
@@ -231,76 +236,82 @@ public class Main {
         return false;
     }
 
-    static void moveElement(int curElementRowIdx, int curElementColIdx) {
+    static void moveElement() {
 
-        if (curElementRowIdx > depth) {
-            depth = curElementRowIdx;
-        }
+        while (!queue.isEmpty()) {
 
-        // 3-1. 정령은 각 골렘을 타고 내려갈 수 있는 가장 아래까지 내려간다.
-        // 3-2-1. 현재 위치가 골렘 중앙인 경우, 상하좌우로 이동 가능 (방문한 곳 제외)
-        if (map[curElementRowIdx][curElementColIdx] == GOLEM_CENTOR) {
-            for (int dr = 0; dr < 4; dr++) {
+            int[] curElementLoca = queue.poll();
+            int curElementRowIdx = curElementLoca[0];
+            int curElementColIdx = curElementLoca[1];
 
-                int nextRowIdx = curElementRowIdx + dRow[dr];
-                int nextColIdx = curElementColIdx + dCol[dr];
-
-                if (visited[nextRowIdx][nextColIdx]) {
-                    continue;
-                }
-
-                visited[nextRowIdx][nextColIdx] = true;
-                moveElement(nextRowIdx, nextColIdx);
-                visited[nextRowIdx][nextColIdx] = false;
+            if (curElementRowIdx > depth) {
+                depth = curElementRowIdx;
             }
-        }
-        // 3-2-2. 현재 위치가 출구인 경우, 주변 골렘으로 이동 가능 (방문한 곳 제외)
-        else if (map[curElementRowIdx][curElementColIdx] == GOLEM_EXIT) {
-            for (int dr = 0; dr < 4; dr++) {
 
-                int nextRowIdx = curElementRowIdx + dRow[dr];
-                int nextColIdx = curElementColIdx + dCol[dr];
+            // 3-1. 정령은 각 골렘을 타고 내려갈 수 있는 가장 아래까지 내려간다.
+            // 3-2-1. 현재 위치가 골렘 중앙인 경우, 상하좌우로 이동 가능 (방문한 곳 제외)
+            if (map[curElementRowIdx][curElementColIdx] == GOLEM_CENTOR) {
+                for (int dr = 0; dr < 4; dr++) {
 
-                if (nextRowIdx < 0 || nextColIdx < 0 || nextRowIdx >= sizeOfRow || nextColIdx >= sizeOfCol) {
-                    continue;
+                    int nextRowIdx = curElementRowIdx + dRow[dr];
+                    int nextColIdx = curElementColIdx + dCol[dr];
+
+                    if (visited[nextRowIdx][nextColIdx]) {
+                        continue;
+                    }
+
+                    visited[nextRowIdx][nextColIdx] = true;
+                    queue.offer(new int[]{nextRowIdx, nextColIdx});
                 }
-
-                if (map[nextRowIdx][nextColIdx] == NOTHING) {
-                    continue;
-                }
-
-                if (visited[nextRowIdx][nextColIdx]) {
-                    continue;
-                }
-
-                visited[nextRowIdx][nextColIdx] = true;
-                moveElement(nextRowIdx, nextColIdx);
-                visited[nextRowIdx][nextColIdx] = false;
             }
-        }
-        // 3-2-3. 현재 위치가 일반 골렘인 경우, 골렘 중앙으로만 이동 가능 (방문한 곳 제외)
-        else {
-            for (int dr = 0; dr < 4; dr++) {
 
-                int nextRowIdx = curElementRowIdx + dRow[dr];
-                int nextColIdx = curElementColIdx + dCol[dr];
+            // 3-2-2. 현재 위치가 출구인 경우, 주변 골렘으로 이동 가능 (방문한 곳 제외)
+            else if (map[curElementRowIdx][curElementColIdx] == GOLEM_EXIT) {
+                for (int dr = 0; dr < 4; dr++) {
 
-                if (nextRowIdx < 0 || nextColIdx < 0 || nextRowIdx >= sizeOfRow || nextColIdx >= sizeOfCol) {
-                    continue;
+                    int nextRowIdx = curElementRowIdx + dRow[dr];
+                    int nextColIdx = curElementColIdx + dCol[dr];
+
+                    if (nextRowIdx < 0 || nextColIdx < 0 || nextRowIdx >= sizeOfRow || nextColIdx >= sizeOfCol) {
+                        continue;
+                    }
+
+                    if (map[nextRowIdx][nextColIdx] == NOTHING) {
+                        continue;
+                    }
+
+                    if (visited[nextRowIdx][nextColIdx]) {
+                        continue;
+                    }
+
+                    visited[nextRowIdx][nextColIdx] = true;
+                    queue.offer(new int[]{nextRowIdx, nextColIdx});
                 }
-
-                if (map[nextRowIdx][nextColIdx] != GOLEM_CENTOR) {
-                    continue;
-                }
-
-                if (visited[nextRowIdx][nextColIdx]) {
-                    continue;
-                }
-
-                visited[nextRowIdx][nextColIdx] = true;
-                moveElement(nextRowIdx, nextColIdx);
-                visited[nextRowIdx][nextColIdx] = false;
             }
+            // 3-2-3. 현재 위치가 일반 골렘인 경우, 골렘 중앙으로만 이동 가능 (방문한 곳 제외)
+            else {
+                for (int dr = 0; dr < 4; dr++) {
+
+                    int nextRowIdx = curElementRowIdx + dRow[dr];
+                    int nextColIdx = curElementColIdx + dCol[dr];
+
+                    if (nextRowIdx < 0 || nextColIdx < 0 || nextRowIdx >= sizeOfRow || nextColIdx >= sizeOfCol) {
+                        continue;
+                    }
+
+                    if (map[nextRowIdx][nextColIdx] != GOLEM_CENTOR) {
+                        continue;
+                    }
+
+                    if (visited[nextRowIdx][nextColIdx]) {
+                        continue;
+                    }
+
+                    visited[nextRowIdx][nextColIdx] = true;
+                    queue.offer(new int[]{nextRowIdx, nextColIdx});
+                }
+            }
+
         }
 
     }
