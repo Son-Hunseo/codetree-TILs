@@ -327,6 +327,10 @@ public class Main {
 
             }
 
+            if (targetSanta == null) {
+                return;
+            }
+
             int minDistanceDr = -1;
             int minDrDistance = Integer.MAX_VALUE;
 
