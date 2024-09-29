@@ -185,7 +185,7 @@ public class Main {
             }
             result += knight.damageCnt;
         }
-        
+
         System.out.println(result);
     }
 
@@ -252,13 +252,6 @@ public class Main {
 
     static class Knight {
 
-        // 1. knightNum: 기사의 번호
-        // 2. knightLocaArr: 기사가 차지하는 공간을 담은 위치 리스트
-        // 3. isPushed
-        // 4. isLive: 기사의 생존 여부를 나타냄 (5-6 >= 0 이면 사망)
-        // 5. hp: 기사의 체력
-        // 6. damageCnt: 받은 데미지
-
         int knightNum;
         ArrayList<int[]> knightLocaList;
         boolean isPushed;
@@ -296,26 +289,6 @@ public class Main {
             cloneKight.isLive = this.isLive;
             cloneKight.damageCnt = this.damageCnt;
             return cloneKight;
-        }
-
-        @Override
-        public String toString() {
-            sb = new StringBuilder();
-            sb.append("KnightNum: ");
-            sb.append(this.knightNum);
-            sb.append(", KnightLoca: ");
-            for (int[] loca : this.knightLocaList) {
-                sb.append(Arrays.toString(loca));
-            }
-            sb.append(", isLive: ");
-            sb.append(this.isLive);
-            sb.append(", isPushed: ");
-            sb.append(this.isPushed);
-            sb.append(", curDamage: ");
-            sb.append(this.damageCnt);
-            sb.append(", curHp: ");
-            sb.append(this.hp - this.damageCnt);
-            return sb.toString();
         }
     }
 
