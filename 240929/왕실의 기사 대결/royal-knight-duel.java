@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
+// 7 0 0 1 0 0 5 0 0 0 4 40 0 0 0 8 0 0 0 0 0 0 0 8 0 0 0 0
+// 7 0 0 1 2 0 5 0 0 0 4 80 0 0 0 8 0 0 0 0 0 0 0 8 0 0 0 0
+
 /**
  * 삼성기출 2023년도 하반기 오전1번 왕실의 기사 대결
  *
@@ -171,12 +174,6 @@ public class Main {
                     knight.isPushed = false;
                 }
             }
-
-            // 디버그
-//            for (Knight knight : KnightList) {
-//                System.out.println(knight.toString());
-//            }
-//            System.out.println("-------------------------");
         }
 
         result = 0;
@@ -186,14 +183,17 @@ public class Main {
             if (!knight.isLive) {
                 continue;
             }
-
             result += knight.damageCnt;
         }
-
+        
         System.out.println(result);
     }
 
     static boolean chainMove(Knight curMoveKight, int dr) {
+
+        if (!curMoveKight.isLive) {
+            return false;
+        }
 
         ArrayList<int[]> curMoveKightLocaList = curMoveKight.knightLocaList;
 
