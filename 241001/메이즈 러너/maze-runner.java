@@ -134,8 +134,10 @@ public class Main {
             });
 
             // 2-2-5. 선택된 정사각형을 90도로 회전
-            Square targetSquare = squareList.get(0);
-            rotateSquareAndBreakWall(targetSquare);
+            if (squareList.size() != 0) {
+                Square targetSquare = squareList.get(0);
+                rotateSquareAndBreakWall(targetSquare);
+            }
         }
 
         int[] exitLoca = getExitLoca();
